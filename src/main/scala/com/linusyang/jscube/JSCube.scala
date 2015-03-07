@@ -35,11 +35,10 @@ object JSCube extends JSApp {
   @JSExport
   def init(): Unit = {
     // Detect mobile device
-    var always_path = true
-    var is_mobile_device = false
-    if (navigator.userAgent matches("(?i).*Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini.*")) {
-      is_mobile_device = true
-    }
+    var is_mobile_device = true
+//    if (navigator.userAgent matches("(?i).*Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini.*")) {
+//      is_mobile_device = true
+//    }
 
     // Grapher initialize
     val canvas: Canvas = jQuery("#canvas").get(0).asInstanceOf[Canvas]
@@ -221,7 +220,7 @@ object JSCube extends JSApp {
       grapher.drawWithColor(current_color)
     })
 
-    if (always_path || is_mobile_device) {
+    if (is_mobile_device) {
       grapher.disableAntiAlias()
       togglePath()
     } else {

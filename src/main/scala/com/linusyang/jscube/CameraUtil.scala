@@ -135,7 +135,7 @@ object CameraUtil {
     var last_y1 = 0.0
 
     val getDist = (x0: Double, x1: Double, y0: Double, y1: Double) => {
-      Math.sqrt (x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1)
+      Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1))
     }
 
     val touchStartEvent = (e: TouchEvent) => {
