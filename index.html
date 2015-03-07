@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JSCube">
+  <meta name="author" content="Linus Yang">
+
+  <title>JSCube</title>
+
+  <link href="lib/css/bootstrap.min.css" rel="stylesheet">
+  <link href="jscube.css" rel="stylesheet">
+</head>
+
+</body>
+  <div id="wrap">
+
+    <div id="help-modal" class="modal fade" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a href="#" class="close" data-dismiss="modal">x</a>
+            <h2>Shortcut Help</h2>
+          </div>
+          <div class="modal-body">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <td><strong>Event <span class="text-muted small">Touch Event</span></strong></td>
+                  <td><strong>Action</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Press R</td>
+                  <td>Reset camera</td>
+                </tr>
+                <tr>
+                  <td>Press B</td>
+                  <td>Toggle background</td>
+                </tr>
+                <tr>
+                  <td>Press A</td>
+                  <td>Toggle anti-aliasing (Only for non-path mode)</td>
+                </tr>
+                <tr>
+                  <td>Press P</td>
+                  <td>Toggle HTML5 path</td>
+                </tr>
+                <tr>
+                  <td>Mouse <span class="text-muted small">One-finger touch</span></td>
+                  <td>Rotate X or Y axis</td>
+                </tr>
+                <tr>
+                  <td>Mouse + Shift <span class="text-muted small">Two-finger pinch</span></td>
+                  <td>Pan Z axis (Zoom)</td>
+                </tr>
+                <tr>
+                  <td>Mouse + Ctrl/Cmd <span class="text-muted small">Two-finger swipe</span></td>
+                  <td>Pan X or Y axis (Translation)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <footer class="modal-footer">
+            <a href="#" class="btn btn-primary" id="help-ok">OK</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <div id="color-modal" class="modal fade" role="dialog" aria-labelledby="colorModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Change Color</h2>
+          </div>
+          <div class="modal-body">
+            <p class="text-info">Choose one of following colors to change:</p>
+
+            <div class="radio">
+              <label><input type="radio" id="color-random" name="colorRadios" checked>
+                Random
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-white" name="colorRadios">
+                White
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-red" name="colorRadios">
+                Red
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-orange" name="colorRadios">
+                Orange
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-green" name="colorRadios">
+                Green
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-cyan" name="colorRadios">
+                Cyan
+              </label>
+            </div>
+
+            <div class="radio">
+              <label><input type="radio" id="color-purple" name="colorRadios">
+                Purple
+              </label>
+            </div>
+
+          </div>
+          <footer class="modal-footer">
+            <a href="#" class="btn btn-default" id="color-cancel">Cancel</a>
+            <a href="#" class="btn btn-primary" id="color-ok">OK</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <div id="path-modal" class="modal fade" role="dialog" aria-labelledby="pathModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3><span class="text-danger">Warning </span><span class="small">Disable HTML5 Path on Mobile Device</span></h3>
+          </div>
+          <div class="modal-body">
+            <p>Disabling HTML5 path rendering on the mobile device may cause the canvas very laggy. Are you sure to disable it?</p>
+          </div>
+          <footer class="modal-footer">
+            <a href="#" class="btn btn-default" id="path-cancel">Cancel</a>
+            <a href="#" class="btn btn-primary" id="path-ok">OK</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">JSCube</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav" id="cube-nav">
+            <li class="active" id="bar-cube"><a href="#">Cube</a></li>
+            <li id="bar-rcube"><a href="#">Rubik's Cube</a></li>
+            <li id="bar-twenty"><a href="#">Icosahedron</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li id="action-color"><a href="#">Change Color</a></li>
+                <li id="action-reset"><a href="#">Reset Camera</a></li>
+                <li id="action-background"><a href="#">Toggle Background</a></li>
+                <li id="action-anti"><a href="#">Toggle Anti-aliasing</a></li>
+                <li id="action-path"><a href="#">Toggle HTML5 Path</a></li>
+                <li class="divider"></li>
+                <li id="action-help"><a href="#">Shortcut Help</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="canvas-wrapper">
+      <canvas id="canvas">
+        <p class="lead text-center">Your browser does not support JSCube.</p>
+      </canvas>
+    </div>
+
+  </div>
+
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted credit">
+        <span><a href="https://github.com/linusyang/jscube-scalajs/" target="_blank">JSCube (Scala.js)</a></span>:
+        A simple 3D engine on HTML5 canvas. <a href="http://linusyang.com/jscube/ppt/" target="_blank">Slides</a>
+        <span class="pull-right">
+          Copyright &copy; 2013-2015 <a href="http://linusyang.com" target="_blank">Linus Yang</a>
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <script src="lib/js/jquery.min.js"></script>
+  <script src="lib/js/bootstrap.min.js"></script>
+  <script src="target/scala-2.11/jscube-opt.js"></script>
+  <script type="text/javascript">$(function (){com.linusyang.jscube.JSCube().init();})</script>
+</body>
+</html>

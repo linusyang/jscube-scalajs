@@ -1,0 +1,13 @@
+*.DS_Store
+.cache
+.classpath
+.project
+.settings/
+.idea/
+project/project/
+project/target/*
+!target/
+target/*
+!target/scala-2.11/
+target/scala-2.11/*
+!target/scala-2.11/jscube-opt.js
