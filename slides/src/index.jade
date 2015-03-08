@@ -1,0 +1,390 @@
+!!! 5
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Scala.js Talk
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/themes/prism-funky.css')
+    link(rel='stylesheet', type='text/css', href='ppt.css')
+
+  body
+
+    article
+      section
+        h2 Hello.
+
+      section
+        h2 Scala<strong>.js</strong>: Write Web Apps in <strong>Scala</strong>
+        hr
+        ul
+          li <small>Mar. 9, 2015</small>
+          li <small>HKFP Meetup Talk by Linus Yang</small>
+
+      section
+        h2 What is Scala?
+        hr
+        ul
+          li A <strong>Scalable</strong> Language: the C++ on JVM<sup>*</sup>
+          li <strong>O</Strong>bject-<strong>O</strong>riented and <strong>F</strong>unctional
+          li Statically typed with <strong>type inference</strong>
+          li <span class="tiny">* <a href="http://yz.mit.edu/wp/true-scala-complexity/" target="_blank"><i>True Scala complexity</i> by Yang Zhang</a></span>
+
+      section
+        h2 Double it! (Java)
+        hr
+        code.language-java
+          pre.
+            List<Integer> ints = new ArrayList<>();
+            ints.add(1);
+            ints.add(2);
+            ints.add(3);
+            List<Integer> intsDoubled = new ArrayList<>();
+            for (Integer i: ints) {
+                instDoubled.add(i * 2);
+            }
+
+      section
+        h2 Double it! (Scala)
+        hr
+        code.language-scala
+          pre.
+            val intsDoubled = List(1, 2, 3).map(_ * 2)
+
+      section
+        h2 Why use Scala over Java?
+        hr
+        ul
+          li <strong>Interoperability</strong> with Java
+          li <strong>Expressibility</strong> vs. verbosity
+          li Better <strong>concurrency model</strong>
+
+      section
+        h2 Who are using Scala?
+        hr
+        ul
+          li <i>Enterprise</i>: Twitter, LinkedIn, FourSquare
+          li Cluster Computing: Big Data<sup>*</sup>
+          li Academia
+          li <span class="tiny">* Previous talk on Spark: <a href="http://www.meetup.com/HK-Functional-programming/events/179181332/" target="_blank"><i>Big Data Analytics in Scala</i></a></span>
+
+      section
+        h2 Front-end web development
+        hr
+        ul
+          li ... <i>Modern</i>
+
+      section
+        ul
+          li <strong>HTML5 & CSS3</strong>
+          li Rendering engines: Gecko, WebKit
+          li <strong>Javascript</strong>
+          li Frameworks & Tools: jQuery, Bootstrap
+
+      section
+        h2 Javascript is not <strong>statically</strong> typed!
+        hr
+        ul
+          li Scalability
+          li Debugging
+          li Performance
+
+      section
+        h2 Typed variants of Javascript
+        hr
+        ul
+          li <strong>Microsoft</strong>: Typescript
+          li <strong>Google</strong>: Dart & AtScript
+          li <strong>Facebook</strong>: Flow
+          li <strong> Mozilla</strong>: asm.js
+
+      section
+        h2 and Scala<strong>.js</strong>
+        hr
+        ul
+          li Full Scala support at <strong>compiler</strong> level
+          li ... <i>everything you know and love about Scala</i>
+          li <strong>Interoperability</strong> with Javascript
+          li ... <i>everything about web: DOM, CSS, jQuery</i>
+          li Generate <strong>efficient</strong> Javascript code
+
+      section
+        h2 Scala(.js) Code
+        hr
+        code.language-scala
+          pre.
+            import scala.scalajs.js.JSApp
+
+            object Main extends js.JSApp {
+              def main() = {
+                var x = 0
+                while (x < 10)
+                  x += 3
+                println(x)
+                // 12
+              }
+            }
+
+      section
+        h2 Compiled Javascript Code
+        hr
+        code.language-javascript
+          pre.
+            ScalaJS.c.LMain$.prototype.main__V = (function() {
+              var x = 0;
+              while ((x < 10)) {
+                x = ((x + 3) | 0) // "| 0" makes x an int
+              };
+              ScalaJS.m.s_Predef$()
+                       .println__O__V(x)
+              // 12
+            });
+
+      section
+        h2 Why Scala.js over alternatives?
+        hr
+        ul
+          li <strong>Reliability</strong>: Not a toy language
+          li <strong>Ecosystem</strong>: SBT, IDE, Unit-testing
+          li <strong>Support</strong>: Nice documentation & community
+          li <strong>Integration</strong>: Share with server-side code
+          li <i>Make you a <strong>full-stack</strong> developer!</i>
+
+      section
+        h2 Use your favourite Scala IDE!
+        hr
+        img(src="img/idea.png")
+        p <span class="tiny">IntelliJ IDEA by JetBrains</span>
+
+      section
+        h2 Hello Scala.js: A tutorial<sup>*</sup>
+        hr
+        ul
+          li <span class="tiny">* <a href="http://www.scala-js.org/doc/tutorial.html" target="_blank">from official <i>Scala.js Tutorial</i></a></span>
+
+      section
+        h2 1. Setup sbt
+
+      section
+        h3 Make sbt plugin file <span class="inline-code">project/plugins.sbt</span>
+        hr
+        code.language-scala
+          pre.
+            addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.1")
+
+      section
+        h3 Create sbt build file <span class="inline-code">build.sbt</span>
+        hr
+        code.language-scala
+          pre.
+            enablePlugins(ScalaJSPlugin)
+            name := "Scala.js Tutorial"
+            scalaVersion := "2.11.6" // or any version >= 2.10.2
+
+      section
+        h3 Specify sbt version at<br /><span class="inline-code">project/build.properties</span>
+        hr
+        code.language-java
+          pre.
+            sbt.version=0.13.7
+
+      section
+        h2 2. Write Scala.js app
+
+      section
+        h3 Create a Scala file at<br /><small><span class="inline-code">src/main/scala/tutorial/webapp/TutorialApp.scala</span></small>
+        hr
+        code.language-scala
+          pre.
+            package tutorial.webapp
+
+            import scala.scalajs.js.JSApp
+
+            object TutorialApp extends JSApp {
+              def main(): Unit = {
+                println("Hello world!")
+              }
+            }
+
+      section
+        h2 3. Execute the app by sbt
+        hr
+        code.language-java
+          pre.
+            $ sbt
+            > run
+            [info] Compiling 1 Scala source to ...
+            [info] Running tutorial.webapp.TutorialApp
+            Hello world!
+            [success] (...)
+
+      section
+        h2 Next up: write a web app
+
+      section
+        h2 Interoperability with Javascript
+        hr
+        ul
+          li Integrate with HTML pages
+          li Interact with Javascript APIs
+
+      section
+        h2 Case Study: Port <strong>JSCube</strong> to Scala.js
+        hr
+        img(src="img/jscube.png")
+
+      section
+        h2 JSCube: <strong>Simple HTML5 3D engine</strong>
+        hr
+        ul
+          li Undergraduate project for Computer Graphics
+          li Purely upon 2D <strong>HTML5 canvas</strong>
+          li Built with <strong>jQuery</strong> and <strong>Bootstrap</strong> framework
+          li Interact with mouse and <strong>multi-touch</strong>
+          li Support <strong>Retina display</strong>
+
+      section
+        h2 Written in CoffeeScript
+        hr
+        ul
+          li <strong>Coffeescript</strong> is
+          li ... <small>a little language compiled to JS</small>
+          li ... <small>with lots of lovely syntactic sugar</small>
+          li ... <small>but still dynamically typed</small>
+          li Now completely rewritten in <strong>Scala.js</strong>!
+
+      section
+        h1 Demo
+        h2 <a href="https://linusyang.github.io/jscube-scalajs/" target="_blank">linusyang.github.io/jscube-scalajs</a>
+
+      section
+        h2 CoffeeScript &#8594; Scala.js
+        hr
+        ul
+          li Deal with <span class="inline-code"><strong>this</strong></span>
+          li <strong>Non-standard</strong> APIs
+
+      section
+        h2 Javascript Keyword: <span class="inline-code"><strong>this</strong></span>
+        hr
+        ul
+          li Evaluates to the current execution context
+          li Conflict with <span class="inline-code">this</span> in Scala
+          li <strong>Workaround</strong>: eleminate "this"
+
+      section
+        h2 Coffeescript
+        hr
+        code.language-coffeescript
+          pre.
+            $("#cube-nav li").click (e) ->
+              ...
+              if not $(this).hasClass "active"
+                $(this).addClass "active"
+              ...
+        p <br />Here, <span class="inline-code">this</span> is identical to <span class="inline-code">e.currentTarget</span>
+
+      section
+        h2 Scala.js
+        hr
+        code.language-scala
+          pre.
+            jQuery("#cube-nav li").click((e: MouseEvent) => {
+              ...
+              if (!(jQuery(e.currentTarget) hasClass "active")) {
+                jQuery(e.currentTarget) addClass "active"
+              }
+              ...
+            })
+
+      section
+        h2 <strong>Non-standard</strong> Javascript APIs
+        hr
+        ul
+          li Some only available in specific browsers/frameworks
+          li ... but Scala.js library only includes <strong>standard</strong> ones
+          li <strong>Type-checking</strong> blocks using undocumented APIs
+          li <strong>Workaround</strong>: Extend the Scala.js interface with traits
+
+      section
+        h2 Port Bootstrap APIs to Scala.js
+        hr
+        ul
+          li Bootstrap is a web framework by Twitter
+          li Extended jQuery with <strong>customized methods</strong>
+          li Here we deal with the <strong><span class="inline-code">modal</span></strong> method
+          li ... used for control modal dialogs
+
+      section
+        h2 Original interface of <span class="inline-code">jQuery</span>
+        hr
+        code.language-scala
+          pre.
+            val jQuery: JQueryStatic = js.native
+
+            trait JQueryStatic extends js.Object {
+              ...
+              def apply(selector: String): JQuery = js.native
+              ...
+            }
+        p <br />Note that there is no <span class="inline-code">modal</span> method in <span class="inline-code">JQuery</span>.
+        p Thus, <span class="inline-code">jQuery(...)</span> i.e. <span class="inline-code">jQuery.apply(...)</span><br /> which has the type <span class="inline-code">JQuery</span> can't call <span class="inline-code">modal</span> method.
+
+      section
+        h2 Extend interface with traits
+        hr
+        code.language-scala
+          pre.
+            trait JQueryModal extends JQuery {
+              def modal(action: String): JQuery = js.native
+            }
+
+            object jQuery extends JQueryStatic {
+              override def apply(selector: String): JQueryModal = js.native
+            }
+        p <br />Object <span class="inline-code">jQuery</span> now can call <span class="inline-code">modal</span> method like
+        code.language-scala
+          pre.
+            jQuery("#path-modal").modal("show")
+
+      section
+        h2 Summary
+
+      section
+        h2 <strong>Scala.js</strong>: promising front-end devtool
+        hr
+        ul
+          li All good things about <strong>Scala</strong>
+          li <strong>Type-safety</strong> & production-ready quality
+          li Interop with JS still needs to improve
+
+      section
+        h2 References & futher reading
+        hr
+        p <a href="http://www.scala-lang.org/news/2015/02/05/scala-js-no-longer-experimental.html" target="_blank">Scala.js no longer experimental</a>
+        p <a href="http://www.scala-js.org/doc/" target="_blank">Scala.js Documentation</a>
+        p <a href="http://lihaoyi.github.io/hands-on-scala-js/" target="_blank">Hands-on Scala.js</a>
+        p <a href="https://news.ycombinator.com/item?id=9002656" target="_blank">Hacker News - Scala.js no longer experimental</a>
+
+      section
+        h2 JSCube (Scala.js) is open-sourced at
+        h2 <a href="https://github.com/linusyang/jscube-scalajs/" target="_blank">github.com/linusyang/jscube-scalajs</a>
+        hr
+        ul
+          li Slides at <a href="https://linusyang.github.io/jscube-scalajs/slides" target="_blank">linusyang.github.io/jscube-scalajs/slides</a>
+          li Also open-sourced on Github
+
+      section
+        h2 Questions?
+
+      section
+        h2 Thank you!
+
+    script(src='bower_components/bespoke.js/dist/bespoke.min.js')
+    script(src='bower_components/bespoke-bullets/dist/bespoke-bullets.min.js')
+    script(src='bower_components/bespoke-hash/dist/bespoke-hash.min.js')
+    script(src='bower_components/bespoke-state/dist/bespoke-state.min.js')
+    script(src='bower_components/prism/prism.js')
+    script(src='bower_components/prism/components/prism-java.min.js')
+    script(src='bower_components/prism/components/prism-scala.min.js')
+    script(src='bower_components/prism/components/prism-coffeescript.min.js')
+    script(src='ppt.js')
